@@ -1,7 +1,8 @@
 const express = require('express');
+require('dotenv').config();
 const path = require('path');
 const app = express();
-
+const routeContacts = require('./routes/contacts');
 
 // Settings
 require('dotenv').config();
@@ -16,7 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 
 // Routes
-
+app.use(routeContacts);
 
 // Server
 app.listen(process.env.PORT, () => {
