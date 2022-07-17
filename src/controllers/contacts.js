@@ -1,30 +1,42 @@
 // const {pool} = require('./../connections');
 
-const inicio = (req, res) => {
-    res.render('index');
-}
-
-
-const viewLogin = (req, res) => {
-    res.send('Login');
+// Controladores para GET
+const all = (req, res) => {
+    const user = req.session.user;
+    res.render('contact/all');
 };
 
 
-const viewRegister = (req, res) => {
-    res.send('Register');
+const viewCreate = (req, res) => {
+    res.render('contact/create');
 };
 
 
-const login = (req, res) => {
-    const datos = req.body;
-    console.log(datos);
+const viewDelete = (req, res) => {
+    res.render('contact/delete');
 };
 
 
-const register = (req, res) => {
-    const datos = req.body;
-    console.log(datos);
+const viewUpdate = (req, res) => {
+    res.render('contact/update');
 };
 
 
-module.exports = { viewLogin, viewRegister, login, register, inicio};
+// Controladores para POST
+const createContact = (req, res) => {
+    res.send(`Creando usuario con datos: ${req.body.name}`);
+};
+
+
+const deleteContact = (req, res) => {
+    res.send("Borrando usuario: " + req.params.id);
+};
+
+
+const updateContact = (req, res) => {
+    res.send("Actualizando usuario: " + req.params.id);
+};
+
+
+// Exportamos las funciones
+module.exports = {all, viewDelete, viewUpdate, deleteContact, updateContact, viewCreate, createContact};
