@@ -1,12 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Pagina inicio</h1>
-</body>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Contacts App</title>
+        <link rel="stylesheet" href="css/landing.css" />
+        <link rel="shortcut icon" href="img/icon.svg" type="image/x-icon">
+        <!-- ====  REMIXICON CDN ==== -->
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Header -->
+        <header class="container header">
+            <!-- Barra de navegacion -->
+            <nav class="nav">
+                <!-- Titulo -->
+                <div class="logo">
+                    <h2>Contacts App</h2>
+                </div>
+                <!-- Navegación -->
+                <div class="nav_menu" id="nav_menu">
+                    <button class="close_btn" id="close_btn">
+                        <i class="ri-close-fill"></i>
+                    </button>
+
+                    <ul class="nav_menu_list">
+                        <li class="nav_menu_item">
+                            <a href="/login" class="nav_menu_link">Iniciar Sesión</a>
+                        </li>
+                        <li class="nav_menu_item">
+                            <a href="/register" class="nav_menu_link">Registrarse</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <button class="toggle_btn" id="toggle_btn">
+                    <i class="ri-menu-line"></i>
+                </button>
+            </nav>
+        </header>
+        
+        <section class="wrapper">
+            <div class="container">
+                <div class="grid-cols-2">
+                    <div class="grid-item-1">
+                        <h1 class="main-heading">
+                            Bienvenidos a <span>Contacts App</span>
+                        </h1>
+                        <p class="info-text">
+                            <span>Contacts App</span> es una aplicación web para gestionar contactos, hecha con Node.js y utilizando Postgres como SGDB. 
+                        </p>
+                        
+                        <!-- Botones -->
+                        <div class="btn_wrapper">
+                            <a href="/login" class="btn view_more_btn">Comenzar
+                                <i class="ri-arrow-right-line"></i>
+                            </a>
+                            <a href="https://github.com/moises35/CRUD_Agenda-de-Contactos" target="_blank" class="btn documentation_btn">Documentación</a>
+                        </div>
+                    </div>
+                    <div class="grid-item-2">
+                        <div class="team_img_wrapper">
+                            <img src="./img/landing.svg" alt="team-img" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer></footer>
+        <script src="js/landing.js"></script>
+    </body>
 </html>
