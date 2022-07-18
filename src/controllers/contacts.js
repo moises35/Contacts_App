@@ -1,4 +1,4 @@
-// const {pool} = require('./../connections');
+const {pool} = require('./../connections');
 
 // Controladores para GET
 const all = (req, res) => {
@@ -24,6 +24,19 @@ const viewUpdate = (req, res) => {
 
 // Controladores para POST
 const createContact = (req, res) => {
+    const name = req.body.name;
+    const email = req.body.email;
+    const telefono = req.body.telefono;
+    const userName = req.body.userName;
+    const sql = `INSERT INTO users(name, email, telefono, userName) VALUES('${name}', '${email}', '${telefono}', '${userName}')`;
+    pool.query(sql, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.redirect('/contact/all', {cod: 'error'});
+        } else {
+            res.redirect('/contact/all', {cod: 'ok'});
+        }
+    });
     res.send(`Creando usuario con datos: ${req.body.name}`);
 };
 
