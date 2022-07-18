@@ -37,7 +37,6 @@ const createContact = (req, res) => {
             res.redirect('/contact/all', {cod: 'ok'});
         }
     });
-    res.send(`Creando usuario con datos: ${req.body.name}`);
 };
 
 
