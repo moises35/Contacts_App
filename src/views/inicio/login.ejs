@@ -1,21 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
+<html>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Iniciar Sesión</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="shortcut icon" href="img/icon.svg" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/a81368914c.js"></script>
     </head>
-    <body>
-        <h1>Iniciar Sesión</h1>
-        <form action="/login" method="post">
-            <label>Usuario
-                <input type="text" name="userName">
-            </label>
-            <label>Password
-                <input type="text" name="password">
-            </label>
-            <input type="submit" value="Iniciar sesión">
-        </form>
-    </body>
+	<body>
+		<img class="wave" src="./img/wave.svg">
+		<div class="container">
+			<div class="img">
+				<img src="img/inicio_imagen.svg">
+			</div>
+			<div class="login-content">
+				<form action="/login" method="post">
+					<img src="img/user.svg">
+					<h2 class="title">Iniciar Sesión</h2>
+					<div class="input-div one">
+					<div class="i">
+							<i class="fas fa-user"></i>
+					</div>
+					<div class="div">
+							<h5>Usuario</h5>
+							<input type="text" class="input" name="userName">
+					</div>
+					</div>
+					<div class="input-div pass">
+					<div class="i"> 
+							<i class="fas fa-lock"></i>
+					</div>
+					<div class="div">
+							<h5>Contraseña</h5>
+							<input type="password" class="input" name="password">
+					</div>
+					</div>
+					<input type="submit" class="btn" value="Login">
+					<span>No tienes una cuenta? <a href="/register" style="display: inline;">Registrate</a></span>
+				</form>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/main.js"></script>
+	</body>
 </html>

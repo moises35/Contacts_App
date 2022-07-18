@@ -1,12 +1,68 @@
 <!DOCTYPE html>
 <html lang="es">
+<html>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Registrarse</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="shortcut icon" href="img/icon.svg" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/a81368914c.js"></script>
     </head>
     <body>
-        <h1>Registro</h1>
+        <img class="wave" src="./img/wave.svg">
+        <div class="container">
+            <!-- Imagen de portada -->
+            <div class="img">
+                <img src="img/registro.svg">
+            </div>
+            <!-- Contenido del login -->
+            <div class="login-content">
+                <!-- Formulario de registro -->
+                <form action="/register" method="post">
+                    <!-- Icono de cabecera del formulario-->
+                    <img src="img/user.svg">
+                    <!-- Titulo principal del formulario -->
+                    <h2 class="title">Registrarse</h2>
+                    <!-- Campo Nombre -->
+                    <div class="input-div one">
+                    <div class="i">
+                            <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                            <h5>Nombre Completo</h5>
+                            <input type="text" class="input" name="name">
+                    </div>
+                    </div>
+                    <!-- Campo usuario -->
+                    <div class="input-div one">
+                    <div class="i">
+                            <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                            <h5>Usuario</h5>
+                            <input type="text" class="input" name="userName">
+                    </div>
+                    </div>
+                    <!-- Campo contraseña -->
+                    <div class="input-div pass">
+                    <div class="i"> 
+                            <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="div">
+                            <h5>Contraseña</h5>
+                            <input type="password" class="input" name="password">
+                    </div>
+                    </div>
+                    <!-- Boton de registro -->
+                    <input type="submit" class="btn" value="Registrarse">
+                    <!-- Boton para volver a inicio de sesión -->
+                    <a href="/login">Volver al inicio</a>
+                </form>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/main.js"></script>
     </body>
 </html>
