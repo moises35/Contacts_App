@@ -42,6 +42,11 @@ body{
 
 .img img{
 	width: 500px;
+	transition: 0.4s;
+}
+
+.img img:hover{ 
+	transform: scale(1.1);
 }
 
 form{
