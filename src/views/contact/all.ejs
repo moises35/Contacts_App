@@ -1,15 +1,82 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Contactos | Ver todo</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Contactos | Todos los contactos</title>
+        <link rel="stylesheet" href="./../css/all.css" />
+        <!-- <link rel="stylesheet" href="./../css/landing.css" /> -->
+        <link rel="shortcut icon" href="./../img/icon.svg" type="image/x-icon"/>
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
     </head>
     <body>
-        <h1>Todos los contactos</h1>
         <% if(user) { %>
-            <h1>Bienvenido <%= user %></h1>
+            <!-- Header -->
+            <header class="container header">
+                <!-- Barra de navegacion -->
+                <nav class="nav">
+                    <!-- Titulo -->
+                    <div class="logo">
+                        <h2>Contacts App</h2>
+                    </div>
+                    <!-- Navegación -->
+                    <div class="nav_menu" id="nav_menu">
+                        <button class="close_btn" id="close_btn">
+                            <i class="ri-close-fill"></i>
+                        </button>
+
+                        <ul class="nav_menu_list">
+                            <li class="nav_menu_item">
+                                <a href="#" class="nav_menu_link">Dashboard</a>
+                            </li>
+                            <li class="nav_menu_item">
+                                <a href="/contact/create" class="nav_menu_link">Agregar contacto</a>
+                            </li>
+                            <li class="nav_menu_item">
+                                <a href="/logout" class="nav_menu_link">Cerrar sesión</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button class="toggle_btn" id="toggle_btn">
+                        <i class="ri-menu-line"></i>
+                    </button>
+                </nav>
+            </header>
+
+            <!-- Titulo principal -->
+            <div class="container">
+                <div class="heading">
+                    <h1>Bienvenido a <span>Contacts App </span> <%= user %>👋🏻</h1>
+                </div>
+                <!-- Si existen contactos entonces los pintamos, sino damos la opción para agregar -->
+                <% if(datos.length > 0) { %> 
+                    <!-- Cards models -->
+                    <div class="row">
+                        <% datos.forEach(element => { %>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h1><%= element.nombre %></h1>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>📱Número:</strong> <%= element.telefono %></p>
+                                    <p><strong>📧Email:</strong> <%= element.email %></p>
+                                    <a href="/contact/update/<%=element.id%>" class="btn green">Actualizar</a>
+                                    <form action="/contact/delete/<%=element.id%>" method="post">
+                                        <input type="submit" value="Eliminar" class="btn red">
+                                    </form>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                <% } else { %>
+                    <h2 class="title2">Aun no tienes ningún contacto registrado. <a href="/contact/create">Agregalos aquí</a>📞</h2>
+                <%} %>
+            </div>
         <% } %>
+
+    <!-- Scripts -->
+    <script src="./../js/landing.js"></script>
     </body>
 </html>
