@@ -1,13 +1,14 @@
 const jwt = require('jsonwebtoken');
-const conexion = require('./../connections');
+const {pool} = require('./../connections');
 
 const verifyToken = (req, res, next) => {
     console.log('Ejecutando token');
     if(req.cookies.token) {
         try {
-            const decodificada = jwt.verify(req.cookies.token, process.env.JWT_CLAVE);
-            const sql = `SELECT * FROM usuarios WHERE userName = ${decodificada.userName}`;
-            conexion.query(sql, (err, result) => {
+            const token = req.cookies.token;
+            const verified = jwt.verify(token, process.env.JWT_CLAVE)
+            const sql = `SELECT * FROM usuarios WHERE username = '${verified.userName}'`;
+            pool.query(sql, (err, result) => {
                 if(!result){
                     next();
                 } else {
@@ -24,10 +25,7 @@ const verifyToken = (req, res, next) => {
     }
 };
 
-const logout = (req, res)=>{
-    res.clearCookie('token')   
-    return res.redirect('/')
-}
+
 
 
 module.exports = verifyToken;

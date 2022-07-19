@@ -7,6 +7,7 @@ const contactsControllers = require('./../controllers/inicio');
 router.get('/', contactsControllers.inicio);
 router.get('/login', contactsControllers.viewLogin);
 router.get('/register', contactsControllers.viewRegister);
+router.get('/logout', contactsControllers.logout);
 
 // POST
 router.post('/login', contactsControllers.login);

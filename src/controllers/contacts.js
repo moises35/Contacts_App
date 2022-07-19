@@ -2,8 +2,22 @@ const {pool} = require('./../connections');
 
 // Controladores para GET
 const all = (req, res) => {
-    const user = req.session.user;
-    res.render('contact/all');
+    // Buscar en la base de datos todos sus contactos
+    const username = req.user.username;
+    const sql = `SELECT * FROM contactos WHERE userName = '${username}'`;
+    let datos = [];
+    pool.query(sql, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.render('contact/all', {user: req.user.name, datos: datos});
+        } else {
+            // Guardar los datos en un array
+            result.rows.forEach(element => {datos.push(element);});
+            console.log(datos);
+            // Enviamos los datos al cliente
+            res.render('contact/all', {user: req.user.name, datos: datos});
+        }
+    });
 };
 
 

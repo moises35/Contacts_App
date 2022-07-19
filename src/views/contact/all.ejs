@@ -8,5 +8,8 @@
     </head>
     <body>
         <h1>Todos los contactos</h1>
+        <% if(user) { %>
+            <h1>Bienvenido <%= user %></h1>
+        <% } %>
     </body>
 </html>

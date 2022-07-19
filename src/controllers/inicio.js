@@ -43,10 +43,10 @@ const login = (req, res) => {
                         // Validamos que la contraseña sea correcta
                         if (bcrypt.compareSync(password, user.password)) {
                             const name = user.name;
-                            const userName = user.userName;
-    
+                            const userName = user.username;
+                            
                             // Generamos el token
-                            const token = jwt.sign({userName: userName}, process.env.JWT_CLAVE, 
+                            const token = jwt.sign({userName: userName, name: name}, process.env.JWT_CLAVE, 
                                 {expiresIn: process.env.JWT_VENCIMIENTO}
                             );
     
@@ -64,7 +64,7 @@ const login = (req, res) => {
                                 alertMessage: 'LOGIN CORRECTO!',
                                 alertIcon: 'success',
                                 showConfirmButton: true,
-                                timer: 1000,
+                                timer: 800,
                                 ruta: 'contact/all'
                             });
                         } else {
@@ -162,4 +162,9 @@ const register = (req, res) => {
 };
 
 
-module.exports = { viewLogin, viewRegister, login, register, inicio};
+const logout = (req, res)=>{
+    res.clearCookie('token')   
+    res.redirect('/')
+}
+
+module.exports = { viewLogin, viewRegister, login, register, inicio, logout};

@@ -22,6 +22,13 @@ app.use(cookieParser());
 app.use('/contact', routeContacts);
 app.use(routeInicio);
 
+//Para eliminar la cache 
+app.use(function(req, res, next) {
+    if (!req.user)
+        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    next();
+});
+
 // Server
 app.listen(process.env.PORT, () => {
     console.log(`Server running on port ${process.env.PORT}`);
