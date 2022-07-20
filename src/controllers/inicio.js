@@ -12,6 +12,7 @@ const viewLogin = (req, res) => {
 };
 
 
+
 const viewRegister = (req, res) => {
     res.render('inicio/register', {alert: false});
 };
@@ -167,4 +168,4 @@ const logout = (req, res)=>{
     res.redirect('/')
 }
 
-module.exports = { viewLogin, viewRegister, login, register, inicio, logout};
+module.exports = {viewLogin, viewRegister, login, register, inicio, logout};

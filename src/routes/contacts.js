@@ -7,7 +7,7 @@ const verifyToken = require('./../middlewares/isVerify');
 // GET:
 router.get('/all', verifyToken,contactsControllers.all);
 router.get('/create', verifyToken, contactsControllers.viewCreate);
-router.get('/delete/:id', verifyToken, contactsControllers.viewDelete);
+router.get('/delete', verifyToken, contactsControllers.viewDelete);
 router.get('/update/:id', verifyToken, contactsControllers.viewUpdate);
 
 // POST:

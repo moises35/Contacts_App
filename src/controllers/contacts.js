@@ -1,4 +1,5 @@
 const {pool} = require('./../connections');
+const jwt = require('jsonwebtoken');
 
 // Controladores para GET
 const all = (req, res) => {
@@ -22,12 +23,12 @@ const all = (req, res) => {
 
 
 const viewCreate = (req, res) => {
-    res.render('contact/create');
+    res.render('contact/create', {alert: false});
 };
 
 
 const viewDelete = (req, res) => {
-    res.render('contact/delete');
+    res.render('contact/delete',  {alert: false});
 };
 
 
@@ -38,24 +39,90 @@ const viewUpdate = (req, res) => {
 
 // Controladores para POST
 const createContact = (req, res) => {
-    const name = req.body.name;
-    const email = req.body.email;
-    const telefono = req.body.telefono;
-    const userName = req.body.userName;
-    const sql = `INSERT INTO users(name, email, telefono, userName) VALUES('${name}', '${email}', '${telefono}', '${userName}')`;
-    pool.query(sql, (err, result) => {
-        if (err) {
-            console.log(err);
-            res.redirect('/contact/all', {cod: 'error'});
+    try {
+        const username = req.user.username;
+        const name = req.body.name;
+        const email = req.body.email;
+        const telefono = req.body.telefono;
+        // Validamos que los campos obligatorios no esten vacios
+        if (name && telefono) {
+            // Agregar a los contactos
+            const sql = `INSERT INTO contactos(nombre, email, telefono, username) VALUES ('${name}', '${email}', '${telefono}', '${username}')`;
+            pool.query(sql, (err, result) => {
+                if (err) {
+                    console.log(err);
+                    res.render('contact/create', {
+                        alert: true,
+                        alertTitle: 'Error',
+                        alertMessage: 'Ha ocurrido un error en la base de datos, verifique su conexión!',
+                        alertIcon: 'error',
+                        showConfirmButton: true,
+                        timer: false,
+                        ruta: 'contact/create'
+                    });
+                } else {
+                    res.render('contact/create', {
+                        alert: true,
+                        alertTitle: 'Conexión exitosa',
+                        alertMessage: 'REGISTRO EXITOSO!',
+                        alertIcon: 'success',
+                        showConfirmButton: true,
+                        timer: 800,
+                        ruta: 'contact/all'
+                    });
+                }
+            });
         } else {
-            res.redirect('/contact/all', {cod: 'ok'});
+            res.render('contact/create', {
+                alert: true,
+                alertTitle: 'Advertencia',
+                alertMessage: 'Verifique que los campos no esten vacios',
+                alertIcon: 'info',
+                showConfirmButton: true,
+                timer: false,
+                ruta: 'contact/create'
+            });
         }
-    });
+    } catch(error) {
+        res.status(500).send(error);
+    }
 };
 
 
 const deleteContact = (req, res) => {
-    res.send("Borrando usuario: " + req.params.id);
+    try {
+        const id = req.params.id;
+        const token = req.cookies.token;
+        const verified = jwt.verify(token, process.env.JWT_CLAVE)
+        const userName = verified.userName;
+        const sql = `DELETE FROM contactos WHERE id = '${id}' AND userName = '${userName}'`;
+        pool.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+                res.render('contact/delete', {
+                    alert: true,
+                    alertTitle: 'Ups algo ha fallado',
+                    alertMessage: 'No se ha podido eliminar el contacto',
+                    alertIcon: 'error',
+                    showConfirmButton: true,
+                    timer: 800,
+                    ruta: 'contact/all'
+                });
+            } else {
+                res.render('contact/delete', {
+                    alert: true,
+                    alertTitle: 'Eliminación exitosa',
+                    alertMessage: 'Se ha eliminado el contacto correctamente',
+                    alertIcon: 'success',
+                    showConfirmButton: true,
+                    timer: 800,
+                    ruta: 'contact/all'
+                });
+            }
+        });
+    } catch(error) {
+        res.status(500).send(error);
+    }
 };
 
 
@@ -65,4 +132,4 @@ const updateContact = (req, res) => {
 
 
 // Exportamos las funciones
-module.exports = {all, viewDelete, viewUpdate, deleteContact, updateContact, viewCreate, createContact};
+module.exports = {all, viewUpdate, deleteContact, updateContact, viewCreate, createContact, viewDelete};

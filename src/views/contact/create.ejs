@@ -5,8 +5,98 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Contactos | Crear Contacto</title>
+        <link rel="shortcut icon" href="./../img/icon.svg" type="image/x-icon"/>
+        <link rel="stylesheet" href="/css/nav.css">
+        <link rel="stylesheet" href="/css/login.css">
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/a81368914c.js"></script>
     </head>
     <body>
-        <h1>Creando nuevo contacto</h1>
+        <!-- Header -->
+        <header class="container header">
+            <!-- Barra de navegacion -->
+            <nav class="nav">
+                <!-- Titulo -->
+                <div class="logo">
+                    <h2>Contacts App</h2>
+                </div>
+                <!-- Navegación -->
+                <div class="nav_menu" id="nav_menu">
+                    <button class="close_btn" id="close_btn">
+                        <i class="ri-close-fill"></i>
+                    </button>
+
+                    <ul class="nav_menu_list">
+                        <li class="nav_menu_item">
+                            <a href="/contact/all" class="nav_menu_link">Dashboard</a>
+                        </li>
+                        <li class="nav_menu_item">
+                            <a href="#" class="nav_menu_link">Agregar contacto</a>
+                        </li>
+                        <li class="nav_menu_item">
+                            <a href="/logout" class="nav_menu_link">Cerrar Sesión</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+                <button class="toggle_btn" id="toggle_btn">
+                    <i class="ri-menu-line"></i>
+                </button>
+            </nav>
+        </header>
+
+        <!-- Agregar contacto -->
+        <div class="login-content">
+            <form action="/contact/create" method="post" autocomplete="off">
+                <img src="/img/user.svg">
+                <h2 class="title">Agregar Contacto</h2>
+                <div class="input-div one">
+                    <div class="i">
+                            <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                            <h5>Nombre</h5>
+                            <input type="text" class="input" name="name">
+                    </div>
+                </div>
+                <div class="input-div one">
+                    <div class="i"> 
+                            <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="div">
+                            <h5>Telefono</h5>
+                            <input type="text" class="input" name="telefono" autocomplete="off">
+                    </div>
+                </div>
+                <div class="input-div one">
+                    <div class="i"> 
+                            <i class="ri-mail-line"></i>
+                    </div>
+                    <div class="div">
+                            <h5>Email</h5>
+                            <input type="text" class="input" name="email">
+                    </div>
+                </div>
+                <input type="submit" class="btnEnviar" value="Agregar">
+            </form>
+        </div>
+
+        <script src="/js/main.js"></script>
+        <script src="/js/create.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <% if(alert) {%>
+			<script>
+				Swal.fire({
+					title: '<%= alertTitle %>',
+					text:'<%= alertMessage %>',
+					icon:'<%= alertIcon %>',
+					showConfirmButton: <%= showConfirmButton %>,
+					timer: <%= timer %>
+				}).then(()=>{
+					window.location = '/<%= ruta %>'
+				})
+			</script>
+		<% } %>
     </body>
 </html>
