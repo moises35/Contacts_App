@@ -2,22 +2,28 @@ const {pool} = require('./../connections');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+// Métodos GET
+// Se encarga de renderizar el landing page
 const inicio = (req, res) => {
     res.render('inicio/index');
 }
 
 
+// Renderizamos el formulario de inicio de sesión
 const viewLogin = (req, res) => {
     res.render('inicio/login', {alert: false});
 };
 
 
-
+// Renderizamos el formulario de registro
 const viewRegister = (req, res) => {
     res.render('inicio/register', {alert: false});
 };
 
 
+
+// Métodos POST
+// Se encarga de validar que los datos del login sean correctos
 const login = (req, res) => {
     try {
         const userName = req.body.userName;
@@ -163,6 +169,7 @@ const register = (req, res) => {
 };
 
 
+// Al cerrar sesión se elimina la cookie con el token y se redirige a la landing page
 const logout = (req, res)=>{
     res.clearCookie('token')   
     res.redirect('/')

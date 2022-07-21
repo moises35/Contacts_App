@@ -1,3 +1,4 @@
+// Importamos la conexión
 const {pool} = require('./../connections');
 const jwt = require('jsonwebtoken');
 
@@ -7,6 +8,7 @@ const all = (req, res) => {
     const username = req.user.username;
     const sql = `SELECT * FROM contactos WHERE userName = '${username}'`;
     let datos = [];
+    // Realizamos la consulta
     pool.query(sql, (err, result) => {
         if (err) {
             console.log(err);
@@ -21,28 +23,35 @@ const all = (req, res) => {
 };
 
 
+// Renderizar la vista para la creación de un nuevo contacto
 const viewCreate = (req, res) => {
     res.render('contact/create', {alert: false});
 };
 
 
+// Renderizar vista para eliminar un contacto (básicamente solo sirve para mostrar la alerta)
 const viewDelete = (req, res) => {
     res.render('contact/delete',  {alert: false});
 };
 
 
+// Realizar el renderizado de la vista para editar un contacto
 const viewUpdate = (req, res) => {
     try {
+        // Tomamos el id y desciframos el token para obtener el usuario
         const id = req.params.id;
         const token = req.cookies.token;
         const verified = jwt.verify(token, process.env.JWT_CLAVE)
         const userName = verified.userName;
+        // Buscamos el contacto en la base de datos tomando como referencia el id y el usuario
         const sql = `SELECT * FROM contactos WHERE id = '${id}' AND userName = '${userName}'`;
+        // Realizamos la consulta
         pool.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
                 res.status(500).send(err);
             } else {
+                // Renderizamos la vista con los datos del contacto
                 datos = result.rows[0];
                 res.render('contact/update', {datos, alert: false, existe: true});
             }
@@ -56,6 +65,7 @@ const viewUpdate = (req, res) => {
 // Controladores para POST
 const createContact = (req, res) => {
     try {
+        // Capturamos los datos del formulario
         const username = req.user.username;
         const name = req.body.name;
         const email = req.body.email;
@@ -64,6 +74,7 @@ const createContact = (req, res) => {
         if (name && telefono) {
             // Agregar a los contactos
             const sql = `INSERT INTO contactos(nombre, email, telefono, username) VALUES ('${name}', '${email}', '${telefono}', '${username}')`;
+            // Realizamos la consulta y enviamos un mensaje de confirmación que se mostrara con sweetalert según el caso
             pool.query(sql, (err, result) => {
                 if (err) {
                     console.log(err);
@@ -105,13 +116,17 @@ const createContact = (req, res) => {
 };
 
 
+// Controlador para eliminar un contacto
 const deleteContact = (req, res) => {
     try {
+        // Capturamos el id y desciframos el token para obtener el usuario
         const id = req.params.id;
         const token = req.cookies.token;
         const verified = jwt.verify(token, process.env.JWT_CLAVE)
         const userName = verified.userName;
+        // Eliminamos el contacto en la base de datos tomando como referencia el id y el usuario
         const sql = `DELETE FROM contactos WHERE id = '${id}' AND userName = '${userName}'`;
+        // Ejecutamos el script y enviamos un mensaje de confirmación que se mostrara con sweetalert según el caso
         pool.query(sql, (err, result) => {
             if (err) {
                 console.log(err);
@@ -142,6 +157,7 @@ const deleteContact = (req, res) => {
 };
 
 
+// Controlador para actualizar un contacto
 const updateContact = (req, res) => {
     try {
         const id = req.params.id;
