@@ -35,12 +35,5 @@ app.use(function(req, res, next) {
 
 // Server
 app.listen(process.env.PORT || 3000, () => {
-    console.log(`Variables de entorno:`);
-    console.log(`HOST: ${process.env.HOST}`);
-    console.log(`USER: ${process.env.USER}`);
-    console.log(`PASSWORD: ${process.env.PASSWORD}`);
-    console.log(`DATABASE: ${process.env.DATABASE}`);
-    console.log(`PORT_DB: ${process.env.PORT_DB}`);
-    console.log(`PORT: ${process.env.PORT}`);
     console.log(`Server running on port`);
 })
