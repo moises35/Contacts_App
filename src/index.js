@@ -6,6 +6,8 @@ const app = express();
 const routeContacts = require('./routes/contacts');
 const routeInicio = require('./routes/inicio');
 const cookieParser = require('cookie-parser');
+// Para que heroku no nos bloquee el acceso
+const cors = require('cors');
 
 // Settings
 require('dotenv').config();
@@ -17,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 // Routes
 app.use('/contact', routeContacts);
