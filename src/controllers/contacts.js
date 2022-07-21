@@ -14,7 +14,6 @@ const all = (req, res) => {
         } else {
             // Guardar los datos en un array
             result.rows.forEach(element => {datos.push(element);});
-            console.log(datos);
             // Enviamos los datos al cliente
             res.render('contact/all', {user: req.user.name, datos: datos});
         }
@@ -33,7 +32,24 @@ const viewDelete = (req, res) => {
 
 
 const viewUpdate = (req, res) => {
-    res.render('contact/update');
+    try {
+        const id = req.params.id;
+        const token = req.cookies.token;
+        const verified = jwt.verify(token, process.env.JWT_CLAVE)
+        const userName = verified.userName;
+        const sql = `SELECT * FROM contactos WHERE id = '${id}' AND userName = '${userName}'`;
+        pool.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send(err);
+            } else {
+                datos = result.rows[0];
+                res.render('contact/update', {datos, alert: false, existe: true});
+            }
+        });
+    } catch(error) {
+        res.status(500).send(error);
+    }
 };
 
 
@@ -127,7 +143,41 @@ const deleteContact = (req, res) => {
 
 
 const updateContact = (req, res) => {
-    res.send("Actualizando usuario: " + req.params.id);
+    try {
+        const id = req.params.id;
+        const token = req.cookies.token;
+        const verified = jwt.verify(token, process.env.JWT_CLAVE)
+        const userName = verified.userName;
+        const sql = `UPDATE contactos SET nombre = '${req.body.name}', email = '${req.body.email}', telefono = '${req.body.telefono}' WHERE id = '${id}' AND userName = '${userName}'`;
+        pool.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+                res.render('contact/update', {
+                    alert: true,
+                    alertTitle: 'Ups algo ha fallado',
+                    alertMessage: 'No se ha podido actualizar el contacto',
+                    alertIcon: 'error',
+                    showConfirmButton: true,
+                    timer: 800,
+                    ruta: 'contact/all',
+                    existe: false
+                });
+            } else {
+                res.render('contact/update', {
+                    alert: true,
+                    alertTitle: 'Actualización exitosa',
+                    alertMessage: 'Se ha actualizado el contacto correctamente',
+                    alertIcon: 'success',
+                    showConfirmButton: true,
+                    timer: 800,
+                    ruta: 'contact/all',
+                    existe: false
+                });
+            }
+        });
+    } catch(error) {
+        res.status(500).send(error);
+    }
 };
 
 
